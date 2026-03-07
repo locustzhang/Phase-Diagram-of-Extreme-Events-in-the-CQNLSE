@@ -70,6 +70,8 @@ plt.rcParams.update({
     'font.size': 12,
     'axes.labelsize': 13,
     'axes.titlesize': 13,
+    'axes.titlelocation': 'center',  # 标题默认居中
+    'axes.titlepad': 10,             # 标题与坐标轴间距（优化美观）
     'xtick.labelsize': 11,
     'ytick.labelsize': 11,
     'legend.fontsize': 10,
@@ -79,7 +81,6 @@ plt.rcParams.update({
     'figure.dpi': 300,
     'savefig.bbox': 'tight',
 })
-
 
 @contextmanager
 def suppress_stdout():
@@ -394,7 +395,7 @@ class SCI_Figure_Generator:
         ax.text(p.q_max_th * 1.02, max(g_th) * 0.85, r'$q_{max}$', fontsize=11)
         ax.set_xlabel(r'Perturbation Wavenumber $q$')
         ax.set_ylabel(r'MI Gain $\lambda(q)$')
-        ax.set_title(r'\textbf{Fig. 1} | MI Gain Spectrum: Theory vs. Numerics', loc='left', fontsize=12)
+        ax.set_title(r'MI Gain Spectrum: Theory vs. Numerics', fontsize=12)
         ax.set_xlim(0);
         ax.set_ylim(0)
         ax.legend(frameon=False)
@@ -464,8 +465,7 @@ class SCI_Figure_Generator:
 
         ax.set_xlabel(r'Time $\tau$')
         ax.set_yticks([])
-        ax.set_title(r'\textbf{Fig. 2} | Temporal Dynamics — MI-Driven Extreme Event Formation', loc='left',
-                     fontsize=12)
+        ax.set_title(r'Temporal Dynamics — MI-Driven Extreme Event Formation', fontsize=12)
         ax.spines[['left', 'right', 'top']].set_visible(False)
         self._save('Fig2_Waterfall')
         print("  Fig 2 done.")
@@ -496,7 +496,7 @@ class SCI_Figure_Generator:
         ax.set_yticks([])
         ax.set_xlabel(r'Frequency $\Omega$')
         ax.set_ylabel(r'PSD (dB, offset)')
-        ax.set_title(r'\textbf{Fig. 3} | Spectral Cascade to Optical Turbulence', loc='left', fontsize=12)
+        ax.set_title(r'Spectral Cascade to Optical Turbulence', fontsize=12)
         ax.spines[['right', 'top']].set_visible(False)
         self._save('Fig3_Spectral_Cascade')
         print("  Fig 3 done.")
@@ -554,7 +554,7 @@ class SCI_Figure_Generator:
 
         ax1.set_xlabel(r'Quintic Coefficient $\alpha$')
         ax1.set_ylabel(r'Background Amplitude $A_0$')
-        ax1.set_title(r'(a) Rogue Wave Probability Map', loc='left', fontsize=12)
+        ax1.set_title(r'(a) Rogue Wave Probability Map', fontsize=12)
         ax1.legend(loc='upper left', frameon=True, framealpha=0.9, fontsize=10)
 
         # ─── Panel (b): Kurtosis (FIXED BLACK ISSUE) ───
@@ -595,9 +595,9 @@ class SCI_Figure_Generator:
 
         ax2.set_xlabel(r'Quintic Coefficient $\alpha$')
         ax2.set_ylabel(r'Background Amplitude $A_0$')
-        ax2.set_title(r'(b) Heavy-Tail Statistics Map', loc='left', fontsize=12)
+        ax2.set_title(r'(b) Heavy-Tail Statistics Map', fontsize=12)
 
-        fig.suptitle(r'\textbf{Fig. 4} | Phase Diagram: Parameter Space of Instability',
+        fig.suptitle(r'Phase Diagram: Parameter Space of Instability',
                      fontsize=14, y=0.98)
 
         self._save('Fig4_Phase_Diagram')
@@ -628,7 +628,7 @@ class SCI_Figure_Generator:
                    label=fr"Extreme event threshold ($2H_s = {st['threshold']:.2f}$)")
         ax.set_ylabel(r'Peak $|\psi|^2$')
         ax.legend(fontsize=9, frameon=False)
-        ax.set_title(r'\textbf{Fig. 5} | Statistical Dynamics \& Numerical Verification', loc='left', fontsize=12)
+        ax.set_title(r'Statistical Dynamics \& Numerical Verification', fontsize=12)
         ax.grid(True, ls=':', alpha=0.4)
         z_dev = s.z_rec[int(len(s.z_rec) * 0.25)]
         ax.axvspan(z_dev, s.z_rec[-1], alpha=0.05, color='green')
@@ -727,8 +727,7 @@ class SCI_Figure_Generator:
 
         ax.set_xlabel('Normalised Intensity I / mean(I)')
         ax.set_ylabel(r'Probability Density $P(I)$')
-        ax.set_title('Fig. 6 | Intensity PDF: Heavy Tail vs Gaussian Reference',
-                     loc='left', fontsize=12)
+        ax.set_title('Intensity PDF: Heavy Tail vs Gaussian Reference', fontsize=12)
         ax.legend(fontsize=9, frameon=False)
         ax.set_xlim(0, bins[-1])
         ax.grid(True, ls=':', alpha=0.3, which='both')
@@ -815,7 +814,7 @@ def noise_robustness_test(base_params, n_seeds=6):
         ax.set_ylabel(ylabel)
         ax.legend(fontsize=8, frameon=False);
         ax.grid(True, ls=':', alpha=0.3)
-    fig.suptitle(r'\textbf{Fig. S1} | Noise Robustness: Deterministic vs. Broadband-Noise Seeding',
+    fig.suptitle(r'Noise Robustness: Deterministic vs. Broadband-Noise Seeding',
                  fontsize=11, y=1.02)
     for ext in ['pdf', 'png']:
         plt.savefig(f'figures/FigS1_Noise_Robustness.{ext}', dpi=300, bbox_inches='tight')
@@ -897,7 +896,7 @@ def alpha_sensitivity_scan(base_params):
     ax.legend(fontsize=8, frameon=False);
     ax.grid(True, ls=':', alpha=0.3)
 
-    fig.suptitle(r'\textbf{Fig. S2} | Quintic Sensitivity: $\alpha \to 0$ Recovers Pure Cubic NLSE',
+    fig.suptitle(r'Quintic Sensitivity: $\alpha \to 0$ Recovers Pure Cubic NLSE',
                  fontsize=11, y=1.02)
     for ext in ['pdf', 'png']:
         plt.savefig(f'figures/FigS2_Alpha_Sensitivity.{ext}', dpi=300, bbox_inches='tight')
@@ -923,7 +922,7 @@ def alpha_sensitivity_scan(base_params):
         ax2.plot(zz, mx, color=col, lw=1.4, label=lab)
     ax2.set_xlabel(r'Propagation distance $z$')
     ax2.set_ylabel(r'Peak intensity $|\psi|^2_{max}$')
-    ax2.set_title('Fig. S2b | FPU Recurrence vs Turbulence Transition', fontsize=11)
+    ax2.set_title('FPU Recurrence vs Turbulence Transition', fontsize=11)
     ax2.legend(fontsize=9, frameon=False)
     ax2.grid(True, ls=':', alpha=0.3)
     for ext in ['pdf', 'png']:
