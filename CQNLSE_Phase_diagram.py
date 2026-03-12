@@ -219,24 +219,30 @@ def ssfm_step(psi, disp_half, dz, gamma, alpha):
 # ─────────────────────────────────────────────────────────────
 
 def hamiltonian(psi, omega, tau, beta2, gamma, alpha):
-    """
-   Compute the Hamiltonian (energy) of the CQ-NLSE.
-   For the standard form: i∂_z ψ - (β₂/2)∂_τ²ψ + γ|ψ|²ψ + α|ψ|⁴ψ = 0
-   The Hamiltonian is: H = ∫ [-(β₂/2)|∂_τψ|² - (γ/2)|ψ|⁴ - (α/3)|ψ|⁶] dτ
-   With i∂_z ψ = +δH/δψ* (standard Hamiltonian equation).
+   """
+Compute the Hamiltonian (energy) of the CQ-NLSE.
 
-    Verification: δH/δψ* = (β₂/2)∂_τ²ψ - γ|ψ|²ψ - α|ψ|⁴ψ
-                  i∂_z ψ = δH/δψ* = (β₂/2)∂_τ²ψ + γ|ψ|²ψ + α|ψ|⁴ψ  ✓
+For the standard form: 
+    i∂_z ψ - (β₂/2)∂_τ²ψ + γ|ψ|²ψ + α|ψ|⁴ψ = 0
 
-    Key Notes:
-    1. For the continuous conservative CQ-NLSE, H is STRICTLY conserved under z-evolution
-       (Noether's theorem for time-translation symmetry in τ-space).
-    2. In discrete SSFM simulations, H drift arises ENTIRELY from SPLITTING ERROR (O(Δz²)),
-       NOT from physical energy redistribution — it is a purely numerical artifact.
-       Reducing Δz will decrease |ΔH/H₀| proportionally to Δz², confirming numerical origin.
-    3. Power (L² norm) is conserved to machine precision in SSFM (unlike H),
-       as the nonlinear operator exp(iφ) is unitary and linear steps are exact.
-    """
+The Hamiltonian is:
+    H = ∫ [-(β₂/2)|∂_τψ|² - (γ/2)|ψ|⁴ - (α/3)|ψ|⁶] dτ
+
+With i∂_z ψ = +δH/δψ* (standard Hamiltonian equation).
+
+Verification:
+    δH/δψ* = (β₂/2)∂_τ²ψ - γ|ψ|²ψ - α|ψ|⁴ψ
+    i∂_z ψ = δH/δψ*
+    ⇒ i∂_z ψ - (β₂/2)∂_τ²ψ + γ|ψ|²ψ + α|ψ|⁴ψ = 0  ✓
+
+Key Notes:
+1. For the continuous conservative CQ-NLSE, H is STRICTLY conserved under 
+   z-evolution (Noether's theorem for time-translation symmetry in τ-space).
+2. In discrete SSFM simulations, H drift arises ENTIRELY from SPLITTING ERROR 
+   (O(Δz²)), NOT from physical energy redistribution.
+3. Power (L² norm) is conserved to machine precision in SSFM (unlike H), as 
+   the nonlinear operator exp(iφ) is unitary and linear steps are exact.
+"""
     psi_k = fft(psi)
     dpsi_dtau = ifft(1j * omega * psi_k)
     I = np.abs(psi) ** 2
