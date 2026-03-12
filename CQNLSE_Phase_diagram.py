@@ -220,14 +220,13 @@ def ssfm_step(psi, disp_half, dz, gamma, alpha):
 
 def hamiltonian(psi, omega, tau, beta2, gamma, alpha):
     """
-    Compute the Hamiltonian (energy) of the CQ-NLSE.
-
-    The CQ-NLSE written as i∂_z ψ = -(β₂/2)∂_τ²ψ - γ|ψ|²ψ - α|ψ|⁴ψ
-    derives from H = ∫ [(β₂/2)|∂_τψ|² - (γ/2)|ψ|⁴ - (α/3)|ψ|⁶] dτ
-    via i∂_z ψ = -δH/δψ*.
+   Compute the Hamiltonian (energy) of the CQ-NLSE.
+   For the standard form: i∂_z ψ - (β₂/2)∂_τ²ψ + γ|ψ|²ψ + α|ψ|⁴ψ = 0
+   The Hamiltonian is: H = ∫ [-(β₂/2)|∂_τψ|² - (γ/2)|ψ|⁴ - (α/3)|ψ|⁶] dτ
+   With i∂_z ψ = +δH/δψ* (standard Hamiltonian equation).
 
     Verification: δH/δψ* = (β₂/2)∂_τ²ψ - γ|ψ|²ψ - α|ψ|⁴ψ
-                  i∂_z ψ = -δH/δψ* = -(β₂/2)∂_τ²ψ + γ|ψ|²ψ + α|ψ|⁴ψ  ✓
+                  i∂_z ψ = δH/δψ* = (β₂/2)∂_τ²ψ + γ|ψ|²ψ + α|ψ|⁴ψ  ✓
 
     Key Notes:
     1. For the continuous conservative CQ-NLSE, H is STRICTLY conserved under z-evolution
